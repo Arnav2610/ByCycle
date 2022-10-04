@@ -1,0 +1,193 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+Tracking
+
+{% endblock %}
+
+{% block body %}
+
+
+<style>
+
+body {
+    color: white;
+    text-align: center;
+    font-family: 'Saira', sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.89), rgba(4, 9, 30, 0.5)),
+    url(static/trackerbackground.jpg); /* BANNER PICTURE HERE*/
+    background-position: center;
+    background-size: cover;
+}
+
+#end_tracking {
+  background-color: #f2d37e;
+  font-size: 18px;
+  margin: 14px;
+  font-family: 'Saira';
+  padding: 7px;
+  border-radius: 11px;
+}
+
+
+.breaker {
+  height: 1.5px;
+  width: 40%;
+  background-color: white;
+  margin: 10px;
+  display: flex;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  border-radius: 5px;
+}
+
+  
+</style>
+
+
+
+<div align="center">
+  <h1 id="time">0:0:0</h1>
+  <h3>TIME ELAPSED</h3>
+</div>
+<div class="breaker"></div>
+<div class="distance" align="center">
+  <h1 id="distance">0.00</h1>
+  <h3>DISTANCE</h3>
+</div>
+<div class="breaker"></div>
+<div class="speed" align="center">
+  <h1 id="speed">0.00</h1>
+  <h3>SPEED</h3>
+</div>
+<div class="breaker"></div>
+<div class="end_tracking" align="center">
+  <form action="/stall">
+    <button id="end_tracking" onclick="sendUserInfo()">End Tracking</button>
+  </form>
+</div>
+
+
+
+
+<script>
+
+
+function sendUserInfo() {
+  distance = document.getElementById("distance").innerHTML
+  distance = distance.replace("km", "");
+  distance = parseFloat(distance);
+  let userInfo = {
+    'distance': distance,
+  }
+  const request = new XMLHttpRequest()
+  request.open('POST',`/processUserInfo/${JSON.stringify(userInfo)}`)
+  request.onload = () => {
+    const flaskMessage = request.responseText
+    console.log(flaskMessage)
+  }
+  request.send()
+}
+
+
+  
+document.addEventListener("DOMContentLoaded", function() {
+  console.log('function 1 clear');
+  navigator.geolocation.getCurrentPosition(startTracking);
+  globalThis.distance = 0.00;
+  document.getElementById("distance").innerHTML = distance.toFixed(2) + " km";
+  
+  trackTime();
+});
+
+let time = 0
+  
+function trackTime() {
+  var hours = Math.floor(time / 3600);
+  if (hours<10) {
+    hours = "0" + hours
+  }
+  time = time - hours * 3600;
+  var minutes = Math.floor(time / 60);
+  if (minutes<10) {
+    minutes = "0" + minutes
+  }
+  var seconds = time - minutes * 60;
+  if (seconds<10) {
+    seconds = "0" + seconds
+  }
+  let formattedTime = hours + ":" + minutes + ":" + seconds;
+  document.getElementById("time").innerHTML = formattedTime;
+  
+  setTimeout(() => {
+    time = time + 1;
+    trackSpeed();
+    trackTime();
+    return;
+  }, 1000);
+}
+
+function trackSpeed() {
+  let distance = document.getElementById("distance").innerHTML;
+  distance = distance.replace("km", "");
+  distance = parseFloat(distance);
+  time_temp = parseFloat(time) / 3600;
+  let speed = distance/time_temp; //distance in km and time in hr
+  document.getElementById("speed").innerHTML = speed.toFixed(2) + " km/h";
+}
+  
+function startTracking(position) {
+  console.log('function 2 clear');
+  globalThis.startingLat = position.coords.latitude;
+  globalThis.startingLong = position.coords.longitude;
+  //document.getElementById("demo").innerHTML = "Latitude: " + startingLat + "<br>Longitude: " + startingLong;
+  //request.open('POST', 'ProcessUserinfo')
+  trackLocation();
+}
+
+function trackLocation() {
+  console.log('function 3 clear');
+  navigator.geolocation.getCurrentPosition(trackingDistance)
+  //this ensures that this function repeats every 5 seconds
+  setTimeout(() => {
+    trackLocation();
+    return;
+  }, 10000);
+}
+
+function trackingDistance(position) {
+  console.log('function 4 clear');
+  let currentLat = position.coords.latitude;
+  let currentLong = position.coords.longitude;
+  distanceCovered = getDistanceFromLatLonInKm(startingLat,startingLong,currentLat,currentLong,'km');
+  //console.log(typeof distanceCovered)
+  distance = distance + distanceCovered;
+  startingLat = currentLat;
+  startingLong = currentLong;
+  //document.getElementById("demo").innerHTML = "Latitude: " + startingLat + "<br>Longitude: " + startingLong;
+  document.getElementById("distance").innerHTML = distance.toFixed(2) + " km";
+  return;
+}
+
+function getDistanceFromLatLonInKm(latitude1,longitude1,latitude2,longitude2,units) {
+  console.log('function 5 clear');
+  var p = 0.017453292519943295;    //This is  Math.PI / 180
+  var c = Math.cos;
+  var a = 0.5 - c((latitude2 - latitude1) * p)/2 + 
+          c(latitude1 * p) * c(latitude2 * p) * 
+          (1 - c((longitude2 - longitude1) * p))/2;
+  var R = 6371; //  Earth distance in km so it will return the distance in km
+  var dist = 2 * R * Math.asin(Math.sqrt(a)); 
+  console.log(dist)
+  return dist; 
+}
+  
+</script>
+
+
+{% endblock %}

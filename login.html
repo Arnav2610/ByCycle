@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block title %}
+
+Login
+
+{% endblock %}
+
+{% block body %}
+
+
+<style>
+
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+  background-image: url("static/background.jpg");
+  background-image: url("static/background.jpg");
+  background-color: #cccccc;
+  height: 1000px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+
+input {
+  padding: 7px;
+  margin: 9px;
+  border-radius: 11px;
+  font-family: 'Saira';
+}
+
+h1 {
+  margin-top: 15px;
+  font-family: 'Saira';
+}
+
+#title {
+  margin-top: 15px;
+  font-family: 'Saira';
+  font-size: 30px;
+}
+
+#submitbutton {
+  background-color: #f2d37e;
+  font-size: 14px;
+  margin: 14px;
+  font-family: 'Saira';
+}
+
+#googlebutton {
+  padding: 8px;
+  border-radius: 14px;
+  background-color: #a84632;
+  font-size: 14px;
+  margin: 14px;
+  font-family: 'Saira';
+}
+
+a {
+  color: #3295a8;
+}
+
+a: hover {
+  color: #3f5b61
+}
+
+a:visited {
+  color: #3295a8;
+}
+
+
+.title {    
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    color: #fff;
+    font-family: 'Saira';
+}
+.title a{
+    text-decoration: none;
+    color: white;
+    font-size: 6vh;
+    font-weight: 200;
+    line-height: 12vh;
+}
+.title p{
+    font-size: 2vh;
+    font-weight: 100;
+    line-height: 5vh;
+}
+
+</style>
+
+<img src="static/Logo2.png" width="150px" style="margin-top: 12px;">
+
+<h1>LOGIN</h1>
+<form action="/loginn" method="POST">
+  <input type="text" name="username" placeholder="Enter Username" value="{{username if username}}" required>
+  <br>
+  <input type="password" name="password" placeholder="Enter Password" value="{{password if password}}" required>
+  <br>
+  <input id="submitbutton" type="submit" value="Login">
+</form>
+
+<a href="/login"><button id="googlebutton">Login with Google</button></a>
+
+<h3><a href="/register">Register</a></h3>
+
+
+{% endblock %}
+

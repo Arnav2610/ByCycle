@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ByCycle: Home</title>
+  <link rel="stylesheet" href="static/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;500;600;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Saira', sans-serif;
+}
+
+
+.links {
+  border-radius: 10px;
+}
+
+body {
+  font-family: 'Saira';
+}
+
+#time {
+  top: 10px;
+  left: 10px;
+}
+
+.leaderboard {
+  border-radius: 10px;
+}
+
+.start {
+  border-radius: 10px;
+}
+
+.info {
+  border-radius: 10px;
+}
+
+  
+.header{
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.89), rgba(4, 9, 30, 0.40)),
+    url(static/homebackground.jpg); /* BANNER PICTURE HERE*/
+    background-position: center;
+    background-size: cover;
+}
+/********************************************************************************/
+.title {    
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    color: #fff;
+    font-family: 'Saira';
+}
+.title a{
+    text-decoration: none;
+    color: white;
+    font-size: 6vh;
+    font-weight: 200;
+    line-height: 12vh;
+}
+.title p{
+    font-size: 2vh;
+    font-weight: 100;
+    line-height: 5vh;
+}
+/********************************************************************************/
+.links ul li{
+    text-align: center;
+    display: inline-block;
+    list-style: none;
+    text-decoration: none;
+    width: 39vw;
+    height: 23vh;
+    border: 0.2vw solid #fff;
+    color: #fff;
+    transition-duration: 0.3s;
+    font-weight: 300;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    vertical-align: top;
+}
+.links ul li.info{
+    margin-left: 9.6vw;
+    margin-right: 1.2vw;
+    background-image: url("static/background1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.links ul li.start{
+    margin-right: 4.4vw;
+    margin-left: 1.2vw;
+    background-image: url("static/background2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.links ul li:hover{
+    background-color:rgb(0, 0, 0);
+}
+.links ul li:active{
+    background-color:rgb(255, 255, 255);
+    color:rgb(0, 0, 0);
+}
+.links ul li.start p{
+    font-size: 4.2vh;
+    text-decoration: none;
+    color:rgb(255, 255, 255);
+    line-height: 4.5vh;
+    margin-top: 11vh;
+    margin-bottom: 3vh;
+    text-align: right;
+    margin-right: 4vw;;
+}
+.links ul li p.time{
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 3.0vh;
+    line-height: 5vh;
+    text-align: left;
+    margin-left: 2.0vw;
+}
+.links ul li p.date{
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 3.0vh;
+    line-height: 3vh;
+    text-align: left;
+    margin-left: 2.0vw;
+}
+
+  
+.links ul li p.distancedisplay{
+    color:rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 6.0vh;
+    line-height: 5vh;
+    text-align: left;
+    margin-left: 2.0vw;
+    margin-top: 1.0vh;
+}
+
+#needed {
+  font-weight: bold;
+  padding-top: 2px;
+}
+/********************************************************************************/
+.leaderboard{
+    width: 80vw;
+    height: 42vh;
+    border: 1px solid #fff;
+    color: #fff;
+    background-color:rgb(57, 58, 59, 0.8);
+    margin-left: 10vw;
+    margin-right: 10vw;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.89), rgba(4, 9, 30, 0.40)),
+    url("static/background3.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.leaderboard h1{
+    text-align: center;
+    font-size: 3vh;
+    line-height: 6vh;
+    color: #fff;
+    font-weight: 200;
+}
+
+.leaderboard h4{
+    text-align: center;
+    font-size: 2.2vh;
+    line-height: 4vh;
+    color: #fff;
+    font-weight: 250;
+}
+
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  text-align: center;
+}
+  
+</style>
+
+
+
+<section class="header">
+  
+    <div class="title">
+        <a href="/">ByCycle</a> <!--TITLE-->
+        <p>"Why not go by cycle instead?"</p>
+        <p>Hello, {{ name }}. You've cycled {{ distance }} kilometers in total!</p> <!--Total Distance Here-->
+    </div>
+  
+    <div class="links">
+        <ul>
+            <li class="info">
+                <p class="temp"><span id="temperature"></span></p>
+                <script>
+                    
+                </script>
+                <p class="time"><span id="time"></span></p>
+                <p class="date"><span id="date"></span></p>
+                <p class="distancedisplay"><span id="distancedisplay">{{ distance }}</span></p>
+            </li>
+            <a href="/tracking"><li class="start">
+                <p>Start<br>Cycling</p>
+            </li></a>
+        </ul>
+    </div>
+  
+    <div class="leaderboard" style="overflow: auto;">
+        <h1>Global Leaderboard</h1>
+
+        <h4>Total Users: {{ lengthList }}</h4>
+      <h4>Your Rank: {{ myRank+1 }}   |   Percentile: {{ percentile }}</h4>
+      
+        <table>
+          
+          <tr>
+            <th>Rank</th>
+            <th>User</th>
+            <th>Distance</th>
+          </tr>
+
+        <tr>
+          <td>{{ myRank+1 }}</td>
+          <td>{{ name }}</td>
+          <td>{{ distance + " km"}}</td>
+        </tr>
+
+        <tr>
+          <td id="needed"></td>
+          <td id="needed"></td>
+          <td id="needed"></td>
+        </tr>
+
+        <tr>
+          <td id="needed"></td>
+          <td id="needed"></td>
+          <td id="needed"></td>
+        </tr>
+          
+        {% for i in range(lengthList) %}
+          
+          <tr>
+            <td>{{ i+1 }}</td>
+            <td>{{ bests[i][0] }}</td>
+            <td>{{ bests[i][1] }} km</td>
+          </tr>
+            
+        {% endfor %}
+        
+        </table>
+      
+    </div>
+  
+</section>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+  updateTime();
+  var dt = new Date();
+  document.getElementById("date").innerHTML = dt.toLocaleDateString();
+});
+  
+function updateTime() {
+  var dt = new Date();
+  document.getElementById("time").innerHTML = dt.toLocaleTimeString();
+  setTimeout(() => {
+    updateTime();
+  }, 1000);
+};      
+                  
+</script>
+
+
+</body>
+</html>
+
